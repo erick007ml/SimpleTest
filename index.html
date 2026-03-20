@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+  </head>
+  <body>
+    <h2>Formulario simple</h2>
+
+    <form id="miFormulario">
+      <label>Nombre:</label><br />
+      <input type="text" name="nombre" required /><br /><br />
+
+      <label>Email:</label><br />
+      <input type="email" name="email" required /><br /><br />
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <p id="respuesta"></p>
+
+    <script>
+      const form = document.getElementById('miFormulario')
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault()
+
+        const data = {
+          nombre: form.nombre.value,
+          email: form.email.value,
+        }
+
+        const response = await fetch(
+          'https://script.google.com/macros/s/AKfycbx3sQXOmicShee4gvtfpi_JBqz2jMRV0CSnBT_5m2FVEswy3IJiP1TkD4q-kJXRP3da/exec',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify(data),
+          },
+        )
+
+        const result = await response.text()
+
+        document.getElementById('respuesta').innerText = result
+        form.reset()
+      })
+    </script>
+  </body>
+</html>
